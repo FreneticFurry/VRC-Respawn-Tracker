@@ -15,9 +15,9 @@ public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs fil
         set
         {
             _respawnedPlayerId = value;
-            if (value != -1)
+            if (value != -1 && DebugMsgs)
             {
-                if (value == Networking.LocalPlayer.playerId && DebugMsgs)
+                if (value == Networking.LocalPlayer.playerId)
                 {
                     Debug.Log($"Local Player Respawned: ID {value}");
                 }
