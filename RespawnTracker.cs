@@ -4,11 +4,11 @@ using VRC.SDKBase;
 using VRC.Udon;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class RespawnTracker : UdonSharpBehaviour
+public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs file to be RespawnTracker then rename "RespawnTracker" to the .cs file name.
 {
     [UdonSynced, FieldChangeCallback(nameof(RespawnedPlayerId))]
     private int _respawnedPlayerId = -1;
-
+    public bool DebugMsgs = true;
     public int RespawnedPlayerId
     {
         set
@@ -16,7 +16,7 @@ public class RespawnTracker : UdonSharpBehaviour
             _respawnedPlayerId = value;
             if (value != -1)
             {
-                if (value == Networking.LocalPlayer.playerId)
+                if (value == Networking.LocalPlayer.playerId && DebugMsgs)
                 {
                     Debug.Log($"Local Player Respawned: ID {value}");
                 }
