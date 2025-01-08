@@ -3,6 +3,9 @@ allows you to track if a remote player or if a local player has respawned
 
 # Example Usage
 
+1. Create a new UdonSharpBehaviour & name it "RespawnTracker" and paste the code (or optionally name it something else but you'd need to change the class name aswell.)
+2. put RespawnTracker.cs on a gameObject and reference it in your code eg. ```public RespawnTracker re;``` to access functions.
+
 ```
 int checkRespawn = re.GetRespawnedPID(); // can also be GetRespawnedName() instead of PlayerID
 if (checkRespawn >= 0)
