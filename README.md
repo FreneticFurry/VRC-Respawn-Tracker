@@ -35,3 +35,7 @@ have fun & enjoy!
 | GetIfRemote() | Check if respawning player is remote | bool | true = remote, false = local |
 | GetRespawnedPID() | Get recently respawned player's ID | int | playerID or -1 for noone has respawned and 0 is unused |
 | GetRespawnedName() | Get recently respawned player's name | string | username or empty if noone has respawned recently |
+
+| Setting | Description |
+|:---------|:------------|
+| DebugMsgs | Defaulted to true, will print debug messsages eg. Remote Player Respawned: ID 69 / Local Player Respawned: ID 420
