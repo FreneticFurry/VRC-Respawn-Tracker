@@ -6,9 +6,10 @@ using VRC.Udon;
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs file to be RespawnTracker then rename "RespawnTracker" to the .cs file name.
 {
+    public bool DebugMsgs = true;
+    
     [UdonSynced, FieldChangeCallback(nameof(RespawnedPlayerId))]
     private int _respawnedPlayerId = -1;
-    public bool DebugMsgs = true;
     public int RespawnedPlayerId
     {
         set
@@ -39,7 +40,7 @@ public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs fil
             {
                 Networking.SetOwner(Networking.LocalPlayer, gameObject);
             }
-
+            
             RespawnedPlayerId = player.playerId;
             RequestSerialization();
             SendCustomEventDelayedSeconds(nameof(ResetPID), 0.175f);
@@ -73,7 +74,7 @@ public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs fil
 
         VRCPlayerApi[] players = new VRCPlayerApi[VRCPlayerApi.GetPlayerCount()];
         VRCPlayerApi.GetPlayers(players);
-
+        
         foreach (var player in players)
         {
             if (player.playerId == RespawnedPlayerId)
@@ -81,7 +82,7 @@ public class RespawnTracker : UdonSharpBehaviour // if you dont name the .cs fil
                 return player.displayName;
             }
         }
-
+        
         return string.Empty;
     }
 }
