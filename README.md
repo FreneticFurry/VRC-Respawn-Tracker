@@ -1,7 +1,7 @@
 # VRC-Respawn-Tracker
 allows you to track if a remote player or if a local player has respawned
 
-# Example Usages
+# Example Usage
 
 ```
 int checkRespawn = re.GetRespawnedPID(); // can also be GetRespawnedName() instead of PlayerID
@@ -23,3 +23,12 @@ its meant to be used in something such as a Update() loop/ a Frame by frame loop
 this is just because vrchat's native "OnPlayerRespawned()" only returns the localplayer and not ever any remote players and some may want to run logic when a remote player respawns aswell rather then only if a localplayer respawns.
 
 have fun & enjoy!
+
+# Documentation
+
+| Function | Description | Return Type | Return Value |
+|:---------|:------------|:------------|:-------------|
+| ResetPID() | Force reset tracked playerID (internal use) | void | force resets the PID to -1 |
+| GetIfRemote() | Check if respawning player is remote | bool | true = remote, false = local |
+| GetRespawnedPID() | Get recently respawned player's ID | int | playerID or -1 for noone has respawned and 0 is unused |
+| GetRespawnedName() | Get recently respawned player's name | string | username or empty if noone has respawned recently |
