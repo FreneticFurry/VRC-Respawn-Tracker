@@ -27,6 +27,10 @@ this is just because vrchat's native "OnPlayerRespawned()" only returns the loca
 
 have fun & enjoy!
 
+# Known Bugs
+
+1. if multiple players respawn at the same time it will only process that 1 of the players have respawned and not everyone who did respawn.
+
 # Documentation
 
 | Function | Description | Return Type | Return Value |
