@@ -1,22 +1,88 @@
 # VRC-Respawn-Tracker
 allows you to track if a remote player or if a local player has respawned
 
+# Setup
+
+1. Download the .unitypackage from the releases section and drag and drop the "RespawnTrackers" prefab into the scene
+2. unpack the prefab and either remove or duplicate the "RespawnTracker" found within the RespawnTrackers gameobject to support more players. recommended: if you have a maximum player count of 5 then have 5 player trackers if you have a maximum of 10 then make 10 trackers.
+3. connect your code to the respawntracker in some way eg. '''public RHandler re;''' to use functions properly in a update or frame by frame loop.
+4. do whatever you're wanting to do with remote player respawn data.
+
 # Example Usage
 
-1. Create a new UdonSharpBehaviour & name it "RespawnTracker" and paste the code (or optionally name it something else but you'd need to change the class name aswell.)
-2. put RespawnTracker.cs on a gameObject and reference it in your code eg. ```public RespawnTracker re;``` to access functions.
-
 ```
-int checkRespawn = re.GetRespawnedPID(); // can also be GetRespawnedName() instead of PlayerID
-if (checkRespawn >= 0)
-{
-    // logic for player respawning both local and remote.
+--------------------GetRespawnPID--------------------
+
+int[] respawnedPIDs = re.GetRespawnPID();
+if (respawnedPIDs.Length > 0 && respawnedPIDs[0] != -1)
+    {
+    foreach (int pid in respawnedPIDs)
+    {
+        // logic for all respawning players to be run locally or in a synced manner.
+        
+        if (pid != Networking.LocalPlayer.playerId)\
+        {
+            // logic here to ignore the localplayer respawning and only get remote respawns.
+        }
+
+        if (pid != 5)\
+        {
+            // ignores the player with playerId 5 making it where everyone else is tracked besides the 5th player.
+        }
+    }
 }
 
-if (checkRespawn >= 0 && re.GetIfRemote())
-{
-    // only run logic on players that're remote that have just respawned (!& for only localplayer respawn logic)
+--------------------GetRespawnName--------------------
+
+string[] respawnedNames = re.GetRespawnName();
+if (respawnedNames.Length > 0 && !(respawnedNames.Length == 1 && respawnedNames[0] == "None"))
+    {
+        foreach (string name in respawnedNames)
+        {
+            // Logic for all respawning players to be run locally or in a synced manner
+            
+            if (name != Networking.LocalPlayer.displayName)
+            {
+                // Logic to ignore the local player respawning and handle only remote players
+            }
+            
+            if (name != "Player5")
+            {
+                // Ignores anyone with the name Player5 and does logic for anyone else without the name Player5
+            }
+        }
+    }
 }
+
+--------------------Both Functions being used together--------------------
+
+int[] respawnedPIDs = re.GetRespawnPID();
+string[] respawnedNames = re.GetRespawnName();
+
+if (respawnedNames.Length > 0 && !(respawnedNames.Length == 1 && respawnedNames[0] == "None"))
+{
+    for (int i = 0; i < respawnedNames.Length; i++)
+    {
+        string name = respawnedNames[i];
+        int pid = i < respawnedPIDs.Length ? respawnedPIDs[i] : -1;
+        
+        // Logic for all respawning players to be run locally or in a synced manner
+        Debug.Log($"Player Respawning: Name = {name}, ID = {pid}");
+        
+        if (name != Networking.LocalPlayer.displayName)
+        {
+            // Logic to ignore the local player respawning and handle only remote players
+            Debug.Log($"Remote Player Respawning: Name = {name}, ID = {pid}");
+        }
+        
+        if (name != "Player5" && pid != 5)
+        {
+             // Ignores anyone with the name "Player5" or ID 5, tracks anyone else
+             Debug.Log($"Player: Name = {name}, ID = {pid}");
+        }
+    }
+}
+----------------------------------------
 ```
 
 # Notes
@@ -25,21 +91,21 @@ its meant to be used in something such as a Update() loop/ a Frame by frame loop
 
 this is just because vrchat's native "OnPlayerRespawned()" only returns the localplayer and not ever any remote players and some may want to run logic when a remote player respawns aswell rather then only if a localplayer respawns.
 
+ive tested alot of methods and the only good method that is fast and effective is giving everyone a local tracker (yes this affects the overhead but its very minimal.) either methods was far to slow or would lose data to often so this option of tracking respawns was eventually chosen.
+
 have fun & enjoy!
 
 # Known Bugs
 
-1. if multiple players respawn at the same time it will only process that 1 of the players have respawned and not everyone who did respawn.
+currently no known bugs, if you come across a bug please report it so it can be fixed! <sub><sup>please</sup></sub>
 
 # Documentation
 
 | Function | Description | Return Type | Return Value |
 |:---------|:------------|:------------|:-------------|
-| ResetPID() | Force reset tracked playerID (internal use) | void | force resets the PID to -1 |
-| GetIfRemote() | Check if respawning player is remote | bool | true = remote, false = local |
-| GetRespawnedPID() | Get recently respawned player's ID | int | playerID or -1 for noone has respawned and 0 is unused |
-| GetRespawnedName() | Get recently respawned player's name | string | username or empty if noone has respawned recently |
+| GetRespawnedPID() | Get recently respawned player's ID(s) | int-array | playerID(s) or -1 for noone has respawned and 0 is unused |
+| GetRespawnedName() | Get recently respawned player's name(s) | string-array | username(s) or empty if noone has respawned recently |
 
 | Setting | Description |
 |:---------|:------------|
-| DebugMsgs | Defaulted to true, will print debug messsages eg. Remote Player Respawned: ID 69 / Local Player Respawned: ID 420
+| DebugMsgs | Defaulted to true, will print debug messsages eg. Remote Player has respawned. Name: Frenetic Furry! ID: 69 / Local Player has respawned. Name: Frenetic Furry! ID: 420
