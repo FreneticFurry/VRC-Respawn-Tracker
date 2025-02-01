@@ -4,9 +4,9 @@ allows you to track if a remote player or if a local player has respawned
 # Setup
 
 1. Download the .unitypackage from the releases section and drag and drop the "RespawnTrackers" prefab into the scene
-2. unpack the prefab and either remove or duplicate the "RespawnTracker" found within the RespawnTrackers gameobject to support more players. recommended: if you have a maximum player count of 5 then have 5 player trackers if you have a maximum of 10 then make 10 trackers.
+2. unpack the prefab and look for the "RespawnTracker (Number)" and check your Max. world capacity and either duplicate or remove "RespawnTracker"'s so this way everyone will properly get their own tracker when the world is fully filled otherwise some people will be left without a tracker and will need to wait for someone with a tracker to leave for them to be assigned a tracker!
 3. connect your code to the respawntracker in some way eg. '''public RHandler re;''' to use functions properly in a update or frame by frame loop.
-4. do whatever you're wanting to do with remote player respawn data.
+4. do whatever you're wanting to do with remote player respawn data. '''example: using "GetRespawnPID" to check if someone else has respawned and remove them from a list without needing to use SetOwner to that remote user and just allowing things to be handled by someone else who either has Lower Ping & High fps rather then giving someone ownership who might be laggy &/ or has very high ping (when someone like that gets ownership it can slow down things and this is just meant to make that faster!)'''
 
 # Example Usage
 
