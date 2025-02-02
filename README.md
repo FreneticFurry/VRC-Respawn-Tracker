@@ -95,9 +95,13 @@ ive tested alot of methods and the only good method that is fast and effective i
 
 have fun & enjoy!
 
-# Known Bugs
+# Known Bugs &/ or issues
 
 currently no known bugs, if you come across a bug please report it so it can be fixed! <sub><sup>please</sup></sub>
+
+# Compatibility
+
+currently is compatible 
 
 # Documentation
 
