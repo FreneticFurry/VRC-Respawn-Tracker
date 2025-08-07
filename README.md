@@ -99,9 +99,9 @@ have fun & enjoy!
 
 currently no known bugs, if you come across a bug please report it so it can be fixed! <sub><sup>please</sup></sub>
 
-# Compatibility
+# Future Update Plans
 
-currently is compatible 
+1. i want to rewrite this to use the PlayerObjects system instead so its more dynamic and better for overhead i think
 
 # Documentation
 
